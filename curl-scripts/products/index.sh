@@ -7,5 +7,4 @@ curl "${API}${URL_PATH}" \
   --include \
   --request GET \
   --header "Content-Type: application/json"
-  
   echo
