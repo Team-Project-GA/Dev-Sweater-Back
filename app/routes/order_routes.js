@@ -3,8 +3,8 @@ const express = require('express')
 // Passport docs: http://www.passportjs.org/docs/
 const passport = require('passport')
 
-// pull in Mongoose model for cart
-const Cart = require('../models/carts')
+// pull in Mongoose model for order
+const Order = require('../models/orders')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
 // it will also set `req.user`
@@ -18,7 +18,7 @@ const handle404 = customErrors.handle404
 const requireOwnership = customErrors.requireOwnership
 
 // this is middleware that will remove blank fields from `req.body`, e.g.
-// { cart: { title: '', text: 'foo' } } -> { cart: { text: 'foo' } }
+// { order: { title: '', text: 'foo' } } -> { order: { text: 'foo' } }
 const removeBlanks = require('../../lib/remove_blank_fields')
 // passing this as a second argument to `router.<verb>` will make it
 // so that a token MUST be passed for that route to be available
@@ -29,31 +29,31 @@ const requireToken = passport.authenticate('bearer', { session: false })
 const router = express.Router()
 
 // INDEX
-// GET /cart
-router.get('/carts', (req, res, next) => {
-  Cart.find()
-    .then(carts => {
-      // `cart` will be an array of Mongoose documents
+// GET /order
+router.get('/orders', (req, res, next) => {
+  Order.find()
+    .then(orders => {
+      // `order` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return carts.map(cart => cart.toObject())
+      return orders.map(order => order.toObject())
     })
-    // respond with status 200 and JSON of the cart
-    .then(carts => res.status(200).json({ carts: carts }))
+    // respond with status 200 and JSON of the order
+    .then(orders => res.status(200).json({ orders: orders }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
 
 // CREATE
-// POST /carts
-router.post('/carts', requireToken, (req, res, next) => {
-  // set owner of new cart to be current user
-  req.body.cart.owner = req.user.id
+// POST /orders
+router.post('/orders', requireToken, (req, res, next) => {
+  // set owner of new order to be current user
+  req.body.order.owner = req.user.id
 
-  Cart.create(req.body.cart)
-    // respond to succesful `create` with status 201 and JSON of new "cart"
-    .then(cart => {
-      res.status(201).json({ cart: cart.toObject() })
+  Order.create(req.body.order)
+    // respond to succesful `create` with status 201 and JSON of new "order"
+    .then(order => {
+      res.status(201).json({ order: order.toObject() })
     })
     // if an error occurs, pass it off to our error handler
     // the error handler needs the error message and the `res` object so that it
@@ -62,21 +62,21 @@ router.post('/carts', requireToken, (req, res, next) => {
 })
 
 // UPDATE
-// PATCH /carts/5a7db6c74d55bc51bdf39793
-router.patch('/carts/:id', requireToken, removeBlanks, (req, res, next) => {
+// PATCH /orders/5a7db6c74d55bc51bdf39793
+router.patch('/orders/:id', requireToken, removeBlanks, (req, res, next) => {
   // if the client attempts to change the `owner` property by including a new
   // owner, prevent that by deleting that key/value pair
-  delete req.body.cart.owner
+  delete req.body.order.owner
 
-  Cart.findById(req.params.id)
+  Order.findById(req.params.id)
     .then(handle404)
-    .then(cart => {
+    .then(order => {
       // pass the `req` object and the Mongoose record to `requireOwnership`
       // it will throw an error if the current user isn't the owner
-      requireOwnership(req, cart)
+      requireOwnership(req, order)
 
       // pass the result of Mongoose's `.update` to the next `.then`
-      return cart.updateOne(req.body.cart)
+      return order.updateOne(req.body.order)
     })
     // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
@@ -85,14 +85,14 @@ router.patch('/carts/:id', requireToken, removeBlanks, (req, res, next) => {
 })
 // DESTROY
 // DELETE /products/5a7db6c74d55bc51bdf39793
-router.delete('/carts/:id', requireToken, (req, res, next) => {
-  Cart.findById(req.params.id)
+router.delete('/orders/:id', requireToken, (req, res, next) => {
+  Order.findById(req.params.id)
     .then(handle404)
-    .then(cart => {
-      // throw an error if current user doesn't own `cart`
-      requireOwnership(req, cart)
-      // delete the cart ONLY IF the above didn't throw
-      cart.deleteOne()
+    .then(order => {
+      // throw an error if current user doesn't own `order`
+      requireOwnership(req, order)
+      // delete the order ONLY IF the above didn't throw
+      order.deleteOne()
     })
     // send back 204 and no content if the deletion succeeded
     .then(() => res.sendStatus(204))

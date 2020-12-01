@@ -1,7 +1,7 @@
 #!/bin/bash
 
 API="http://localhost:4741"
-URL_PATH="/carts"
+URL_PATH="/orders"
 
 curl "${API}${URL_PATH}" \
   --include \
@@ -9,7 +9,8 @@ curl "${API}${URL_PATH}" \
   --header "Content-Type: application/json" \
   --header "Authorization: Bearer ${TOKEN}" \
   --data '{
-    "cart": {
+    "order": {
+      "totalPrice": "'"${totalPrice}"'",
       "name": "'"${NAME}"'",
       "price": "'"${PRICE}"'",
       "description": "'"${DESCRIPTION}"'",
