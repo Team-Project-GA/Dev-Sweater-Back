@@ -44,6 +44,18 @@ router.get('/orders', (req, res, next) => {
     .catch(next)
 })
 
+// SHOW
+// GET /orders/5a7db6c74d55bc51bdf39793
+router.get('/orders/:id', requireToken, (req, res, next) => {
+  // req.params.id will be set based on the `:id` in the route
+  Order.findById(req.params.id)
+    .then(handle404)
+    // if `findById` is succesful, respond with 200 and "order" JSON
+    .then(order => res.status(200).json({ order: order.toObject() }))
+    // if an error occurs, pass it to the handler
+    .catch(next)
+})
+
 // CREATE
 // POST /orders
 router.post('/orders', requireToken, (req, res, next) => {
