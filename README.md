@@ -19,7 +19,7 @@ We started by creating the ERD, Wireframes and SCRUM planning for the project. W
 #### Technologies Used
 
 - Express
-- MongoDB
+- MongoDB Atlas
 - Mongoose
 
 ## User Stories
