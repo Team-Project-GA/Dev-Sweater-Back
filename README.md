@@ -1,19 +1,42 @@
-## Topology Used:
+# Dev-Sweater-Back
 
-Express | MongoDB | JavaScript| Mongoose
+## Application
 
-## Steps we went through
+This is our team project Dev-Sweater e-commerce site. This application was broken into two parts: `Dev-Sweater-Front` & `Dev-Sweater-Back`. The `Dev-Sweater-Front` was designed to communicate with `Dev-Sweater-Back` API, so that a user can go through the process of purchasing a product.
 
-1. After setting this api up, I tested is the auth/curl-scripts work.
-2. I added the productSchema was added to models/products.js
-3. Created curl-scripts for create, index, update, and destroy.
-4. Created product_routes
-5. Updated server.js
-6. Tested the products index, create, update , and destroy.
-7. pushed everything up
-8. we added the orderSchema to models/orders.js
-9. Created the curl-scripts for create, index, update and destroy.
-10. In the server.js file, I had to add require for the orderRoutes
-11. In the server.js file, I had to add register route files for orderRoutes.
-12. I created the order_routes file in the routes folder
-13. I tested the index, create, update and destroy.
+## Important Links
+
+- `Dev-Sweater-Back` is deployed [here](https://dev-sweater-back.herokuapp.com/)
+
+- `Dev-Sweater-Front` is the **_Frontend_** for this application, the repo and deployed links can be found here:
+  [Repo](https://github.com/Team-Project-GA/Dev-Sweater-Front)
+  [Deployed](https://team-project-ga.github.io/Dev-Sweater-Front/)
+
+## Planning Story
+
+We started by creating the ERD, Wireframes and SCRUM planning for the project. We then created the **_Backend_** of the application before moving to the **_Frontend_** to confirm my API routes were working. Lastly, we deployed both parts of the application and added styling.
+
+#### Technologies Used
+
+- Express
+- MongoDB
+- Mongoose
+
+## User Stories
+
+- As an unregistered user, I would like to sign up with email and password.
+- As a registered user, I would like to sign in with email and password.
+- As a signed in user, I would like to change password.
+- As a signed in user, I would like to sign out.
+- As an unregistered user, I would like to see all of the products.
+- As a signed in user, I would like to add and remove products from a shopping cart.
+- As a signed in user, I would like to purchase products in a shopping cart using Stripe.
+- As a signed in user, I would like to see all my past orders.
+
+## Unsolved Problems
+
+- None
+
+## ERD
+
+![ERD Image](https://i.imgur.com/mfYeJhK.png)
