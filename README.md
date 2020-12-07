@@ -12,6 +12,16 @@ This is our team project, an e-commerce site called Dev-Sweater. This applicatio
   [Repo Link](https://github.com/Team-Project-GA/Dev-Sweater-Front)
   [Deployed Link](https://team-project-ga.github.io/Dev-Sweater-Front/)
 
+## Products
+
+  | Verb   | URI Pattern  | Controller#Action  |
+  |:-------|:-------------|:-------------------|
+  | GET    | `/products`     | `products#index`  |
+  | GET    | `/products/:id` | `products#show`   |
+  | POST   | `/products`     | `products#create` |
+  | PATCH  | `/products/:id` | `products#update` |
+  | DELETE | `/products/:id` | `products#destroy` |
+
 ## Planning Story
 
 We started by creating the ERD, Wireframes and SCRUM planning for the project. We then created the **_Backend_** of the application before moving to the **_Frontend_** to confirm my API routes were working. Lastly, we deployed both parts of the application and added styling.
